@@ -6,20 +6,26 @@
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
  
+## NestCLI
 
- ### NestJS Modules
+```bash
+nest g --help
+nest g module nome-do-module
+```
+
+ ## NestJS Modules
 
 - Cada aplicação tem pelo menos um module - o **root module**. Que é o ponto inicial da aplicação.
 - Modules são uma forma efetiva de organizar os componentes por um conjunto de capacidades intimamente relacionadas.
 - São boas práticas ter uma pasta por module, contendo o module`s components.
 - Modules são **Singletons**. Portanto, um module pode ser importado por múltiplos modules.
 
-# Definindo um Module.
+## Definindo um Module.
 
 - Um **Module** é definido usando o **Decorator** **@Module** na criação da classe.
 - O **Decorator** providencia metadata que o nest usa pra organizar a estrutura da aplicação
 
-# Propriedades do @Modules Decorator
+## Propriedades do @Modules Decorator
 
 - **Providers**:  Array de provedores que estar disponível dentro do módulo através de injeção de dependência.
 - **Controllers**: Array de controladores que serem instanciados dentro do Module.
@@ -27,7 +33,7 @@
 - **Imports**: Lista de modules necessários para este module. Qualquer provedor exportado por esses module estará agora disponível em nosso module através de injeção de dependência.
 
 
-# Exemplo de Modules
+## Exemplo de Modules
  
 ```ts
 @Module({
@@ -44,10 +50,43 @@
 })
 export class ForumModule {}
 ```
+## NestJS Controllers
 
-## NestCLI
+- Responsável por lidar com as **Request** recebidas e retorna **Responses** ao cliente.
+- Vinculado a um caminho específico (por exemplo, “/task” para o recurso de task).
+- Contem manipuladores, que lidam com **endpoints** e métodos de **Requests** (GET, POST, DELETE, etc.)
+- Pode aproveitar a injeção de dependência para consumir **providers** no mesmo **module**.
 
-```bash
-nest g --help
-nest g module tasks
+## Definindo controllers.
+
+- **Controllers** são definidos por **Decorators** com o @**Controller decorator**.
+- O **decorator** aceita uma **string**, o path para lidar com o **Controller**.
+
+EX: 
+
+```ts
+@Controller('/tasks')
+export class TaskController {
+//...
+}
 ```
+
+## Definindo um Handler.
+
+- **Handlers** são simples métodos na classe Controller, (@Get, @Post, @Delete, etc.)
+
+EX:
+
+```ts
+@Controller('/tasks')
+export class TaskController {
+  @Get()
+  getAllTasks() {
+    return ...;
+  }
+
+  @Post()
+  createTask() {
+    return ...;
+  }
+```  
