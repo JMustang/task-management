@@ -44,3 +44,10 @@
 })
 export class ForumModule {}
 ```
+
+## NestCLI
+
+```bash
+nest g --help
+nest g module tasks
+```
