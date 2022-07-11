@@ -69,7 +69,7 @@ EX:
 ```ts
 @Controller('/tasks')
 export class TaskController {
-//...
+return ...
 }
 ```
 
@@ -92,3 +92,61 @@ export class TaskController {
     return ...;
   }
 ```  
+
+## NestJS Providers
+
+- Pode ser injetado em construtores se decorado como um @Injectable, por injeção de dependência.
+- Pode ser um valor simples, uma classe, sync/async, etc.
+- Os Providers devem ser fornecidos ao module para serem utilizáveis.
+- Pode ser exportado a partir de um module - e, em seguida, estar disponível para outros modules que o importam.
+
+## O que é um Service?
+
+- Definidos como providers. Nem todos os providers são services
+- Conceito comum no desenvolvimento de software e não são exclusivos NestJS, JavaScript ou desenvolvimento back-end.
+- Singleton quando embrulhado com @Injectable() e fornecido a um module. Isso significa que a mesma instância será compartilhada em todo o aplicativo - agindo como uma única fonte de verdade.
+- A principal fonte da lógica. Por exemplo, um serviço será chamado um controller para validar dados, criar um item no banco de dados e retornar uma response.
+
+## Providers em Modules
+
+EX:
+
+```ts
+import { TasksController } from './tasks/tasks.controller';
+import { TasksService } from './tasks/task.service';
+import { LoggerService } from '../shared/logger.service';
+
+@Module({
+  controllers: [
+    TasksController,
+    ],
+    providers: [
+      TasksService,
+      LoggerService
+       ]
+})
+export class TasksModule {}
+
+```
+
+## Injeção de dependência no NestJS
+
+- Qualquer componente no ecossistema NestJS pode injetar um provedor decorado com o @Injectale.
+- Definimos as dependências no construtor da classe. NestJS cuidará da injeção para nós, e então estará disponível como uma propriedade de classe.
+
+EX: 
+
+```ts
+import { TasksService } from './tasks.service';
+
+@Controller('/tasks')
+export class TasksController {
+  constructor(private tasksService: TasksService) {}
+
+  @Get()
+  async getAllTasks() {
+    return await this.tasksService.getAllTasks();
+  }
+}
+
+```
