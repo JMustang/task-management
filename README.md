@@ -12,6 +12,7 @@
 nest g --help
 nest g module nome-do-module
 nest g controller nome-do-controller --no-spec
+nest g service nome-do-service --no-spec
 ```
 - A flag **--no-spec** serve pra os arquivos de controller test não serem adicionados.
 
