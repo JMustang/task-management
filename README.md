@@ -151,3 +151,33 @@ export class TasksController {
 }
 
 ```
+
+
+# Data Transfer Object (DTO)
+
+- Um, Data transfer object (DTO) é um objeto usado para encapsular dados e enviá-lo de um subsistema de um aplicativo para outro.
+- Um DTO é um objeto que define como os dados serão enviados na rede.
+
+## Mais sobre (DTO)
+
+- Conceito comum no desenvolvimento de software que não é específico do NestJS.
+- Resulte em mais código à prova de balas, pois pode ser usado como um tipo TypeScript.
+- Não tenha nenhum comportamento exceto para armazenamento, recuperação, serialização e deserção de seus próprios dados.
+- Resulte em aumento de desempenho (embora insignificante em aplicação pequena).
+- Um DTO NÃO é uma definição de modelo. Ele define a forma de dados para um caso específico, por exemplo — criar uma tarefa.
+- Pode ser definido usando uma **interface** ou uma **classe**.
+
+## Classes VS Interfaces.
+
+- O objeto de transferência de dados (DTOs) pode ser definido como classes ou interfaces.
+- A abordagem recomendada é o uso de **Classes**, também documentadas na documentação do NestJS.
+- A razão é que as interfaces fazem parte do **TypeScript** portanto, não são preservadas após a compilação.
+- As **classes** nos permitem fazer mais, e como eles fazem parte do JavaScript, eles preservarão a pós-compilação.
+- O NestJS não pode se referir à interface em tempo de execução, mas pode se referir a **classes**.
+
+## Nota Importante!
+
+- O objeto de transferência de dados NÃO é obrigatório.
+- Você ainda pode desenvolver aplicativos sem usar DTOs.
+- No entanto, o valor que eles adicionam faz valer a pena usá-los quando aplicável.
+- Aplicar o padrão DTO o mais rápido possível facilitará a manutenção e refatoração do seu código.
