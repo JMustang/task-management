@@ -181,3 +181,98 @@ export class TasksController {
 - Você ainda pode desenvolver aplicativos sem usar DTOs.
 - No entanto, o valor que eles adicionam faz valer a pena usá-los quando aplicável.
 - Aplicar o padrão DTO o mais rápido possível facilitará a manutenção e refatoração do seu código.
+
+
+## NestJS pipes
+
+- os Pipes operam nos argumentos a serem processados pelo manipulador de rota, pouco antes de o manipulador ser chamado.
+- Os pipes podem realizar a transformação de dados ou validação de dados.
+- Os pipes podem retornar dados — originais ou modificados — que serão repassados ao manipulador de rotas.
+- Os pipes podem lançar exceções. O lançamento de exceções será manipulado pelo NestJS e analisado em uma resposta de erro.
+- Os pipes pode ser assíncrono.
+
+## Pipes padrão no nestJS
+
+- O NestJS envia pipes úteis no módulo **@nestjs/comum**.
+
+### Pipe de validação.
+
+- Valida a compatibilidade de um objeto inteiro contra uma classe (combina bem com DTOs ou Objetos de Transferência de Dados). Se qualquer propriedade não puder ser mapeada adequadamente (por exemplo, tipo de incompatibilidade) a validação falhará.
+- Um caso de uso muito comum, portanto, ter um pipe de validação embutido é extremamente útil.
+
+### ParseIntPipe
+
+- por padrão, os argumentos são do tipo **String**. Este pipe valida que um argumento é um número. Se for bem-sucedido, o argumento é transformado em um **Number** e passado para o manipulador.
+
+## Implementação personalizada de pipe
+
+- Os pipes são classes anotadas com o decorator de **@Injectable**.
+- Os pipes devem implementar a interface genérica PipeTransform. Portanto, cada pipe deve ter um método de **transform()**. Este método será chamado pela NestJS para processar os argumentos.
+- o método **transform()** aceita dois parâmetros:
+1. Value: o value do argumento processado. 
+2. Metadata (opcional): um objeto contendo metadata sobre o argumento. 
+- O que for devolvido do método **transform()** será passado para o manipulador de rotas. Exceções serão enviadas de volta ao cliente.
+- Pipes podem ser consumidos de várias formas.
+
+Os pipes de nível de manipulador são definidos no nível do manipulador, através do decorador @UsePipes(). Esse pipe processará todos os parâmetros para as solicitações recebidas.
+
+```ts
+
+@Post()
+
+@UsePipes(SomePipe)
+
+createTask(
+
+@Body(‘description’) description) {
+
+//…
+
+}
+
+```
+
+Os pipes de nível de parâmetro são definidos no nível do parâmetro. Apenas o parâmetro específico para o qual o pipe foi especificado será processado.
+
+```ts
+
+@Post()
+
+createTask(
+
+@Body(‘description’, SomePipe) description) {
+
+//…
+
+}
+
+```
+
+Os pipes globais são definidos no nível de aplicação e serão aplicados a qualquer solicitação recebida.
+
+```ts
+
+async function bootstrap() {
+
+const app = await NestFactory.create(ApplicationModule);
+
+app.useGlobalPipes(SomePipe);
+
+await app.listen(3000);
+
+}
+
+bootstrap();
+
+```
+
+## Pipes de nível de parâmetro vs nível de manipuladores. Qual deles usar?
+
+ **Isso depende**. 
+
+- Pipes de nível parâmetro tendem a ser mais fina e limpa. No entanto, eles muitas vezes resultam em código extra adicionado aos manipuladores — isso pode ficar confuso e difícil de manter.
+- Os pipes de nível de manipuladores exigem um pouco mais de código, mas fornecem alguns grandes benefícios:
+1. Esses pipes não requerem código extra no nível do parâmetro. 
+2. Mais fácil de manter e expandir. Se a forma dos dados muda, é fácil efetuar as mudanças necessárias apenas no pipe. 
+3. A responsabilidade de identificar os argumentos para processar é transferida para um arquivo central — o **pipe file**. 
+4. Promover o uso de DTOs (Objetos de Transferência de Dados), o que é uma prática ótima.
