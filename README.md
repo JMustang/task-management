@@ -5,6 +5,20 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
+
+## Rodando Postgres via Docker
+
+```bash
+> docker run --name postgres-nest -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+```
+
+- **Docker**: chamada para o docker
+- **run**: Rodar uma conteiner
+- **--name**: nome do conteiner
+- **-p** 5432:5432: Porta que sera usada pelo docker - essa porta aponta para o host
+- **-e**: Variavel de ambiente, aqui eu estou setando a senha do postgres POSTGRES_PASSWORD=postgres
+- **-d**: Vai rodar no modo Detached(se o terminal for fechado o conteiner continuara rodando)
+- **postgres**: O conteiner que sera criado
  
 ## NestCLI
 
