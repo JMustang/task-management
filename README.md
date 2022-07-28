@@ -290,3 +290,47 @@ bootstrap();
 2. Mais fácil de manter e expandir. Se a forma dos dados muda, é fácil efetuar as mudanças necessárias apenas no pipe. 
 3. A responsabilidade de identificar os argumentos para processar é transferida para um arquivo central — o **pipe file**. 
 4. Promover o uso de DTOs (Objetos de Transferência de Dados), o que é uma prática ótima.
+
+
+## Mapeamento Relacional de Objetos (ORM)
+
+- O Mapeamento Relacional de Objetos é uma técnica que permite consultar e manipular dados de um banco de dados, usando um paradigma orientado a objetos.
+- Existem muitas bibliotecas ORM que permitem que os desenvolvedores se comuniquem com o banco de dados usando sua linguagem de programação preferida, em vez de enviar consultas simples diretamente.
+
+### Pros e contras de usar uma biblioteca ORM
+
+1. Pros.
+- Escrevendo o modelo de dados em um só lugar - mais fácil de manter. Menos repetição.
+- Muitas coisas feitas automaticamente - manipulação de banco de dados, tipo de dados, relações etc.
+- Não há necessidade de escrever sintaxe SQL (fácil de aprender, difícil de dominar). Usando sua maneira natural de codificação.
+- Abstração de banco de dados - você pode alterar o tipo de banco de dados sempre que desejar.
+- Aproveita a POO, portanto, coisas como herança são fáceis de alcançar.
+
+1. Contras
+- Você precisa aprender, e as bibliotecas ORM nem sempre são simples.
+- O desempenho é bom, mas é fácil negligenciar.
+- Facilita esquecer (ou nunca aprender) o que está acontecendo nos bastidores, o que pode levar a uma variedade de problemas de manutenção.
+
+## TypeORM
+
+- TypeORM é uma biblioteca ORM que pode ser executada em Node.js e usada com TypeScript (ou JavaScript).
+- Nos ajuda a definir e gerenciar entidades, repositórios, colunas, relações, replicação, índices, consultas, logs e muito mais.
+
+### Exemplo
+
+- Recuperando todas as tarefas pertencentes a "Ashley" e com status "Concluído".
+
+```ts
+// TypeORM:
+const tasks = await Task.find({ status: 'DONE', user: 'Ashley' })
+```
+```js
+// JavaScript puro
+let tasks;
+db.query('SELECT * FROM tasks WHERE status = 'DONE' AND user = 'Ashley"', (err, result) => {
+  if (err) {
+    throw new Error('Could not retrieve tasks!');
+  }
+  tasks = result.rows;
+   });
+```
