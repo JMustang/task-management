@@ -334,3 +334,7 @@ db.query('SELECT * FROM tasks WHERE status = 'DONE' AND user = 'Ashley"', (err, 
   tasks = result.rows;
    });
 ```
+
+```bash
+yarn add typeorm @nestjs/typeorm pg
+```
