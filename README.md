@@ -6,6 +6,10 @@
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
 
+
+## Lembra de ler a documentação do typeORM
+
+
 ## Rodando Postgres via Docker
 
 ```bash
